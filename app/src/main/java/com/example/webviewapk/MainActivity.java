@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.webView = findViewById(R.id.web_view);
 
-        webView.loadUrl("https://intranet.cb.amrita.edu");
+        webView.loadUrl(getString(R.string.base_URL));
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setDomStorageEnabled(true);
@@ -64,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
         swipeContainer = findViewById(R.id.swipeContainer);
 
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(R.color.black,
-                android.R.color.holo_green_dark,
-                android.R.color.holo_orange_dark,
-                android.R.color.holo_blue_dark);
+//        // Configure the refreshing colors
+//        swipeContainer.setColorSchemeResources(R.color.black,
+//                android.R.color.holo_green_dark,
+//                android.R.color.holo_orange_dark,
+//                android.R.color.holo_blue_dark);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -93,8 +93,7 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(WebView view, int newProgress) {
                 progressBar.setProgress(newProgress);
                 if (newProgress == 100) {
-                    progressBar.setVisibility(View.GONE);
-                    swipeContainer.setRefreshing(false);
+                    progressBar.setVisibility(View.INVISIBLE);
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
                 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WebViewTest</string>
+    <string name="base_URL">https://intranet.cb.amrita.edu</string>
 </resources>
