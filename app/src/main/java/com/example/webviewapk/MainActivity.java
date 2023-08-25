@@ -6,6 +6,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
@@ -13,6 +16,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -21,13 +25,16 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBar;
     SwipeRefreshLayout swipeContainer;
 
+    float startY;
+
     @Override
-    public void onBackPressed() {
-        if (webView.canGoBack()) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
             webView.goBack();
-        } else {
-            super.onBackPressed();
+            return true;
         }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -43,15 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setDomStorageEnabled(true);
-
-//        CookieManager cookieManager = CookieManager.getInstance();
-//        cookieManager.setAcceptCookie(true); // allow cookies
-//        CookieManager.getInstance().setAcceptThirdPartyCookies(this.webView, true);
+        webSettings.setJavaScriptEnabled(true);
 
         this.webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // Use cache when content is available
 
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setUseWideViewPort(true);
+
+        webView.setNestedScrollingEnabled(true);
 
         webView.getSettings().setSupportZoom(true); //used for providing some flexibilty while zooming in or out
         webView.getSettings().setBuiltInZoomControls(true);
@@ -64,17 +70,23 @@ public class MainActivity extends AppCompatActivity {
 
         swipeContainer = findViewById(R.id.swipeContainer);
 
-//        // Configure the refreshing colors
-//        swipeContainer.setColorSchemeResources(R.color.black,
-//                android.R.color.holo_green_dark,
-//                android.R.color.holo_orange_dark,
-//                android.R.color.holo_blue_dark);
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(R.color.black,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                webView.reload();
-                swipeContainer.setRefreshing(false);
+                swipeContainer.setRefreshing(true);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeContainer.setRefreshing(false);
+                        webView.reload();
+                    }
+                },  1000);
             }
         });
 
@@ -100,8 +112,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // WebViewClient allows you to handler
-        // onPageFinished and override Url loading.
-        webView.setWebViewClient(new WebViewClient());
+        webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(scrollY == 0)
+                {
+                    swipeContainer.setEnabled(true);
+                }
+                else {
+                    swipeContainer.setEnabled(false);
+                }
+            }
+        });
+
     }
 }
