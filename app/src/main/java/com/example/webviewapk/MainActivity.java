@@ -1,8 +1,10 @@
 package com.example.webviewapk;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,15 +19,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     WebView webView; //declare the webview
     ProgressBar progressBar;
-    SwipeRefreshLayout swipeContainer;
-
-    float startY;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -68,28 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
         webSettings.setUserAgentString(webSettings.getUserAgentString().replace("; wv",""));
 
-        swipeContainer = findViewById(R.id.swipeContainer);
-
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(R.color.black,
-                android.R.color.holo_green_dark,
-                android.R.color.holo_orange_dark,
-                android.R.color.holo_blue_dark);
-
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeContainer.setRefreshing(true);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeContainer.setRefreshing(false);
-                        webView.reload();
-                    }
-                },  1000);
-            }
-        });
-
 //        Toast.makeText(this,webSettings.getUserAgentString(),Toast.LENGTH_LONG).show();
         webView.setWebViewClient(new WebViewClient() {
 
@@ -111,19 +90,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(scrollY == 0)
-                {
-                    swipeContainer.setEnabled(true);
-                }
-                else {
-                    swipeContainer.setEnabled(false);
-                }
-            }
-        });
-
     }
 }
