@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     WebView webView; //declare the webview
     ProgressBar progressBar;
 
+    FrameLayout frameLayout;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -46,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         this.progressBar = findViewById(R.id.progressBar);
 
         this.webView = findViewById(R.id.web_view);
+
+        this.frameLayout = findViewById(R.id.fragment_container);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new splash_fragment())
+                .commit();
 
         webView.loadUrl(getString(R.string.base_URL));
 
@@ -67,7 +75,10 @@ public class MainActivity extends AppCompatActivity {
         webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         webView.setScrollbarFadingEnabled(false);
 
-        webSettings.setUserAgentString(webSettings.getUserAgentString().replace("; wv",""));
+//        webSettings.setUserAgentString(webSettings.getUserAgentString().replace("; wv",""));
+
+        webSettings.setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36");
+
 
 //        Toast.makeText(this,webSettings.getUserAgentString(),Toast.LENGTH_LONG).show();
         webView.setWebViewClient(new WebViewClient() {
@@ -85,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
                 progressBar.setProgress(newProgress);
                 if (newProgress == 100) {
                     progressBar.setVisibility(View.INVISIBLE);
+                    frameLayout.setVisibility(View.GONE);
+                    webView.setVisibility(View.VISIBLE);
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
                 }

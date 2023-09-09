@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">WebViewTest</string>
-    <string name="base_URL">https://app.haveloc.com</string>
+    <string name="app_name">ChatGPT</string>
+    <string name="base_URL">https://chat.openai.com</string>
 </resources>
