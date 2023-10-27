@@ -1,35 +1,31 @@
 package com.example.webviewapk;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.content.Context;
-import android.graphics.Bitmap;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.CookieManager;
+import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
-import android.widget.Toast;
-
 public class MainActivity extends AppCompatActivity {
     WebView webView; //declare the webview
     ProgressBar progressBar;
 
     FrameLayout frameLayout;
 
+    private static final int PERMISSION_REQUEST_CODE = 1234;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -76,9 +72,7 @@ public class MainActivity extends AppCompatActivity {
         webView.setScrollbarFadingEnabled(false);
 
 //        webSettings.setUserAgentString(webSettings.getUserAgentString().replace("; wv",""));
-
-        webSettings.setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36");
-
+        webSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 10; Pixel 4 XL Build/QQ3A.200805.001) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Mobile Safari/537.36");
 
 //        Toast.makeText(this,webSettings.getUserAgentString(),Toast.LENGTH_LONG).show();
         webView.setWebViewClient(new WebViewClient() {
@@ -91,6 +85,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         this.webView.setWebChromeClient(new WebChromeClient(){
+
+            @Override
+            public void onPermissionRequest(final PermissionRequest request) {
+                runOnUiThread(() -> {
+                    if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                        request.grant(request.getResources());
+                    } else {
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+                    }
+                });
+            }
+
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 progressBar.setProgress(newProgress);
@@ -103,5 +109,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            // Permission is granted. Continue the action or workflow in your app.
+        } else {
+            // Explain to the user that the feature is unavailable because the features require a permission that the user has denied.
+        }
     }
 }
