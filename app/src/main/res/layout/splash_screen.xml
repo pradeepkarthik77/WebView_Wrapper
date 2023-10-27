@@ -9,7 +9,7 @@
         android:id="@+id/fragment_image"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:src="@drawable/chatgpt_icon"
+        android:src="@drawable/app_icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
