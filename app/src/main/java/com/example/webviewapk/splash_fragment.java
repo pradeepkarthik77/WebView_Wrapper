@@ -1,4 +1,4 @@
-package com.example.webviewapk;
+package com.example.removebg;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">ChatGPT</string>
-    <string name="base_URL">https://webcamtests.com</string>
-</resources>
+        <string name="app_name">removebg</string>
+        <string name="base_URL">https://www.remove.bg</string>
+    </resources>

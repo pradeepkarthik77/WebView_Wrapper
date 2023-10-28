@@ -4,11 +4,11 @@
         }
 
         android {
-            namespace = "com.example.webviewapk"
+            namespace = "com.example.removebg"
             compileSdk = 33
 
             defaultConfig {
-                applicationId = "com.example.webviewapk"
+                applicationId = "com.example.removebg"
                 minSdk = 24
                 targetSdk = 33
                 versionCode = 1

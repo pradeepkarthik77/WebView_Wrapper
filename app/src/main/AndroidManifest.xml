@@ -8,20 +8,13 @@
             android:name="android.hardware.camera"
             android:required="false" />
             <uses-permission android:name="android.permission.CAMERA" />
-            <uses-permission android:name="android.permission.RECORD_AUDIO" /><!-- Coarse location (network-based) -->
-            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-            <!-- Fine location (GPS) -->
-            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-            <!-- If targeting Android 10 (API level 29) or higher -->
-            <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
-            <!-- Read external storage -->
+            <uses-permission android:name="android.permission.RECORD_AUDIO" /><!-- Read external storage -->
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
             <!-- Write to external storage -->
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-
-    <application
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />            
+            
+        
+            <application
                 android:allowBackup="true"
                 android:dataExtractionRules="@xml/data_extraction_rules"
                 android:fullBackupContent="@xml/backup_rules"
