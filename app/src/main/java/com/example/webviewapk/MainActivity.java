@@ -1,4 +1,4 @@
-package com.example.removebg;
+package com.example.sample;
 
         import androidx.annotation.NonNull;
         import androidx.appcompat.app.AppCompatActivity;
@@ -64,7 +64,7 @@ package com.example.removebg;
                 {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
         
-                    editor.putString("permission","1010");
+                    editor.putString("permission","0000");
         
                     editor.putBoolean("hasAssigned",true);
         
@@ -80,6 +80,7 @@ package com.example.removebg;
                 WebSettings webSettings = webView.getSettings();
                 webSettings.setDomStorageEnabled(true);
                 webSettings.setJavaScriptEnabled(true);
+                webView.getSettings().setAllowFileAccess(true);
         
                 this.webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // Use cache when content is available
         
@@ -117,6 +118,15 @@ package com.example.removebg;
                             String[] requestedResources = request.getResources();
         
                             String[] androidPermissions = get_permissions();
+        
+                            String permission = "";
+        
+                            for(String perm: requestedResources)
+                            {
+                                permission+=perm;
+                            }
+        
+                            Toast.makeText(getApplicationContext(),permission,Toast.LENGTH_LONG).show();
         
                             if (hasAllPermissions(androidPermissions)) {
                                 request.grant(requestedResources);

@@ -4,11 +4,11 @@
         }
 
         android {
-            namespace = "com.example.removebg"
+            namespace = "com.example.sample"
             compileSdk = 33
 
             defaultConfig {
-                applicationId = "com.example.removebg"
+                applicationId = "com.example.sample"
                 minSdk = 24
                 targetSdk = 33
                 versionCode = 1

@@ -1,4 +1,4 @@
 <resources>
-        <string name="app_name">removebg</string>
-        <string name="base_URL">https://www.remove.bg</string>
+        <string name="app_name">Sample</string>
+        <string name="base_URL">https://bard.google.com</string>
     </resources>

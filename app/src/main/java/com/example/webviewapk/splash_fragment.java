@@ -1,4 +1,4 @@
-package com.example.removebg;
+package com.example.sample;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
