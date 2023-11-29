@@ -1,4 +1,4 @@
-package com.example.sample;
+package com.example.webviewapk;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

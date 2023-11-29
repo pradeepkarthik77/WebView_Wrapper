@@ -1,4 +1,4 @@
-package com.example.sample;
+package com.example.webviewapk;
 
         import androidx.annotation.NonNull;
         import androidx.appcompat.app.AppCompatActivity;

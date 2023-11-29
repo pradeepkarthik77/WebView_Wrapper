@@ -4,11 +4,11 @@
         }
 
         android {
-            namespace = "com.example.sample"
+            namespace = "com.example.webviewapk"
             compileSdk = 33
 
             defaultConfig {
-                applicationId = "com.example.sample"
+                applicationId = "com.example.webviewapk"
                 minSdk = 24
                 targetSdk = 33
                 versionCode = 1
